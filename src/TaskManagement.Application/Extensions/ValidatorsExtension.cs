@@ -45,7 +45,7 @@ public static class ValidatorsExtension
             let errorMessage = validationError.ErrorMessage
             let error = Error.Deserialize(errorMessage)
             select Errors.General.ValueIsInvalid(
-                nameof(validationError.PropertyName) + " is invalid");
+                validationError.PropertyName + " is invalid");
 
         return errors.ToList();
     }

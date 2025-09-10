@@ -1,4 +1,4 @@
-﻿namespace TaskManagement.Application.Abstractions.Models;
+﻿namespace TaskManagement.Application.Models;
 
 public class PageList<T>
 {

@@ -42,11 +42,11 @@ public class IssueConfiguration : IEntityTypeConfiguration<Issue>
                     HasColumnName("author");
             });
         
-        builder.ComplexProperty(i => i.Assignee,
+        builder.OwnsOne(i => i.Assignee,
             t =>
             {
                 t.Property(v => v.Value).
-                    IsRequired().
+                    IsRequired(false).
                     HasColumnName("assignee");
             });
         

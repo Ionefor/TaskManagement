@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TaskManagement.Application.Abstractions.Models;
+using TaskManagement.Application.Models;
 
 namespace TaskManagement.Application.Extensions;
 

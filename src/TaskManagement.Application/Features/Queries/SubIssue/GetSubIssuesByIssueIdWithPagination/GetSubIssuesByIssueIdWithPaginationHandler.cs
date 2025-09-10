@@ -1,8 +1,8 @@
 ﻿using TaskManagement.Application.Abstractions;
 using TaskManagement.Application.Abstractions.CQ;
-using TaskManagement.Application.Abstractions.Models;
 using TaskManagement.Application.Dto;
 using TaskManagement.Application.Extensions;
+using TaskManagement.Application.Models;
 
 namespace TaskManagement.Application.Features.Queries.SubIssue.GetSubIssuesByIssueIdWithPagination;
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.Commands.Issue.CreateIssue;
 using TaskManagement.Application.Features.Commands.Issue.DeleteIssue;
 using TaskManagement.Application.Features.Commands.Issue.SetAssignee;
@@ -8,13 +9,14 @@ using TaskManagement.Application.Features.Commands.Issue.UpdateStatus;
 using TaskManagement.Application.Features.Commands.Issue.UpdateTitle;
 using TaskManagement.Application.Features.Queries.Issue.GetIssueById;
 using TaskManagement.Application.Features.Queries.Issue.GetIssuesWithPagination;
+using TaskManagement.Application.Models;
 using TaskManagement.Presentation.Requests.Issues;
 
 namespace TaskManagement.Presentation.Controllers;
 
-[ApiController]
+[Authorize]
 [Route("issues")]
-public class IssueController : ControllerBase
+public class IssueController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
@@ -27,12 +29,12 @@ public class IssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Created("", result.Value);
+        return Created("", Envelope.Ok(result.Value));
     }
     
-    [HttpDelete("{issueId}")]
+    [HttpDelete("{issueId:guid}")]
     public async Task<ActionResult<Guid>> Delete(
         [FromServices] DeleteIssueHandler handler,
         [FromRoute] Guid issueId,
@@ -45,16 +47,16 @@ public class IssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
-    [HttpPut("{issueId}/assignee")]
+    [HttpPut("{issueId:guid}/assignee")]
     public async Task<ActionResult<Guid>> SetAssignee(
         [FromRoute] Guid issueId,
         [FromServices] SetAssigneeHandler handler,
-        [FromForm] SetAssigneeRequest request,
+        [FromBody] SetAssigneeRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -62,16 +64,16 @@ public class IssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
-    [HttpPut("{issueId}/title")]
+    [HttpPut("{issueId:guid}/title")]
     public async Task<ActionResult<Guid>> UpdateTitle(
         [FromRoute] Guid issueId,
         [FromServices] UpdateTitleHandler handler,
-        [FromForm] UpdateTitleRequest request,
+        [FromBody] UpdateTitleRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -79,16 +81,16 @@ public class IssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
-    [HttpPut("{issueId}/description")]
+    [HttpPut("{issueId:guid}/description")]
     public async Task<ActionResult<Guid>> UpdateDescription(
         [FromRoute] Guid issueId,
         [FromServices] UpdateDescriptionHandler handler,
-        [FromForm] UpdateDescriptionRequest request,
+        [FromBody] UpdateDescriptionRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -96,16 +98,16 @@ public class IssueController : ControllerBase
                 cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
-    [HttpPut("{issueId}/status")]
+    [HttpPut("{issueId:guid}/status")]
     public async Task<ActionResult<Guid>> UpdateStatus(
         [FromRoute] Guid issueId,
         [FromServices] UpdateStatusHandler handler,
-        [FromForm] UpdateStatusRequest request,
+        [FromBody] UpdateStatusRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -113,16 +115,16 @@ public class IssueController : ControllerBase
                 cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
-    [HttpPut("{issueId}/priority")]
+    [HttpPut("{issueId:guid}/priority")]
     public async Task<ActionResult<Guid>> UpdatePriority(
         [FromRoute] Guid issueId,
         [FromServices] UpdatePriorityHandler handler,
-        [FromForm] UpdatePriorityRequest request,
+        [FromBody] UpdatePriorityRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -130,9 +132,9 @@ public class IssueController : ControllerBase
                 cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpGet]
@@ -145,10 +147,10 @@ public class IssueController : ControllerBase
                 request.ToQuery(),
                 cancellationToken);
 
-        return Ok(response);
+        return Ok(Envelope.Ok(response));
     }
     
-    [HttpGet("{issueId}")]
+    [HttpGet("{issueId:guid}")]
     public async Task<ActionResult<Guid>> GetById(
         [FromServices] GetIssueByIdHandler handler,
         [FromRoute] Guid issueId,
@@ -161,8 +163,8 @@ public class IssueController : ControllerBase
             cancellationToken);
         
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
         
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
 }

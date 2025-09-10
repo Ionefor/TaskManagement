@@ -12,11 +12,11 @@ public class SubIssueDto
     
     public string Description { get; init; }
     
-    public IssueStatus  Status { get; init; }
+    public string  Status { get; init; }
     
-    public IssuePriority  Priority { get; init; }
+    public string  Priority { get; init; }
     
     public string Author { get; init; }
     
-    public string Assignee { get; init; }
+    public string? Assignee { get; init; }
 }

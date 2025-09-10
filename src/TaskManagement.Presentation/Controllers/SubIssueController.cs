@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TaskManagement.Application.Features.Commands.SubIssue.CreateSubIssue;
 using TaskManagement.Application.Features.Commands.SubIssue.DeleteSubIssue;
 using TaskManagement.Application.Features.Commands.SubIssue.SetSubIssueAssignee;
@@ -8,13 +9,14 @@ using TaskManagement.Application.Features.Commands.SubIssue.UpdateSubIssueStatus
 using TaskManagement.Application.Features.Commands.SubIssue.UpdateSubIssueTitle;
 using TaskManagement.Application.Features.Queries.SubIssue.GetSubIssuesById;
 using TaskManagement.Application.Features.Queries.SubIssue.GetSubIssuesByIssueIdWithPagination;
+using TaskManagement.Application.Models;
 using TaskManagement.Presentation.Requests.SubIssues;
 
 namespace TaskManagement.Presentation.Controllers;
 
-[ApiController]
+[Authorize]
 [Route("issues/{issueId:guid}/subIssues")]
-public class SubIssueController : ControllerBase
+public class SubIssueController : ApplicationController
 {
     [HttpPost]
     public async Task<ActionResult<Guid>> Create(
@@ -28,9 +30,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Created("", result.Value);
+        return Created("", Envelope.Ok(result.Value));
     }
     
     [HttpDelete("{subIssueId:guid}")]
@@ -47,9 +49,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpPut("{subIssueId:guid}/assignee")]
@@ -57,7 +59,7 @@ public class SubIssueController : ControllerBase
         [FromRoute] Guid issueId,
         [FromRoute] Guid subIssueId,
         [FromServices] SetSubIssueAssigneeHandler handler,
-        [FromForm] SetSubIssueAssigneeRequest request,
+        [FromBody] SetSubIssueAssigneeRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -65,9 +67,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpPut("{subIssueId:guid}/title")]
@@ -75,7 +77,7 @@ public class SubIssueController : ControllerBase
         [FromRoute] Guid issueId,
         [FromRoute] Guid subIssueId,
         [FromServices] UpdateSubIssueTitleHandler handler,
-        [FromForm] UpdateSubIssueTitleRequest request,
+        [FromBody] UpdateSubIssueTitleRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -83,9 +85,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpPut("{subIssueId:guid}/description")]
@@ -93,7 +95,7 @@ public class SubIssueController : ControllerBase
         [FromRoute] Guid issueId,
         [FromRoute] Guid subIssueId,
         [FromServices] UpdateSubIssueDescriptionHandler handler,
-        [FromForm] UpdateSubIssueDescriptionRequest request,
+        [FromBody] UpdateSubIssueDescriptionRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -101,9 +103,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpPut("{subIssueId:guid}/status")]
@@ -111,7 +113,7 @@ public class SubIssueController : ControllerBase
         [FromRoute] Guid issueId,
         [FromRoute] Guid subIssueId,
         [FromServices] UpdateSubIssueStatusHandler handler,
-        [FromForm] UpdateSubIssueStatusRequest request,
+        [FromBody] UpdateSubIssueStatusRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -119,9 +121,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpPut("{subIssueId:guid}/priority")]
@@ -129,7 +131,7 @@ public class SubIssueController : ControllerBase
         [FromRoute] Guid issueId,
         [FromRoute] Guid subIssueId,
         [FromServices] UpdateSubIssuePriorityHandler handler,
-        [FromForm] UpdateSubIssuePriorityRequest request,
+        [FromBody] UpdateSubIssuePriorityRequest request,
         CancellationToken cancellationToken)
     {
         var result = await handler.Handle(
@@ -137,9 +139,9 @@ public class SubIssueController : ControllerBase
             cancellationToken);
 
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
 
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
     
     [HttpGet]
@@ -153,7 +155,7 @@ public class SubIssueController : ControllerBase
             request.ToQuery(issueId),
             cancellationToken);
 
-        return Ok(response);
+        return Ok(Envelope.Ok(response));
     }
     
     [HttpGet("{subIssueId:guid}")]
@@ -170,8 +172,8 @@ public class SubIssueController : ControllerBase
             cancellationToken);
         
         if (result.IsFailure)
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error));
         
-        return Ok(result.Value);
+        return Ok(Envelope.Ok(result.Value));
     }
 }

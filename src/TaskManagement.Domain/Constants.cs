@@ -6,7 +6,7 @@ public static class Constants
     {
         public const string ConfigurationsWrite = "Configurations.Write";
         public const string ConfigurationsRead = "Configurations.Read";
-        public const string Database = "Database";
+        public const string Database = "database";
         public const string SchemaName = "TaskManagement";
     }
     
