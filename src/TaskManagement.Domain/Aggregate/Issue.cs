@@ -92,7 +92,7 @@ public class Issue : BaseEntity<IssueId>
         if (subIssue is null)
         {
             return Errors.Errors.
-                General.NotFound("SubTask not found");
+                General.NotFound(nameof(subIssue));
         }
         
         subIssue.SetAssignee(assignee);
@@ -109,7 +109,7 @@ public class Issue : BaseEntity<IssueId>
         if (subIssue is null)
         {
             return Errors.Errors.
-                General.NotFound("SubTask not found");
+                General.NotFound(nameof(subIssue));
         }
         
         subIssue.UpdateTitle(title);
@@ -126,7 +126,7 @@ public class Issue : BaseEntity<IssueId>
         if (subIssue is null)
         {
             return Errors.Errors.
-                General.NotFound("SubIssue not found");
+                General.NotFound(nameof(subIssue));
         }
         
         subIssue.UpdateDescription(description);
@@ -143,7 +143,7 @@ public class Issue : BaseEntity<IssueId>
         if (subIssue is null)
         {
             return Errors.Errors.
-                General.NotFound("SubIssue not found");
+                General.NotFound(nameof(subIssue));
         }
         
         subIssue.UpdateStatus(status);
@@ -160,7 +160,7 @@ public class Issue : BaseEntity<IssueId>
         if (subIssue is null)
         {
             return Errors.Errors.
-                General.NotFound("SubIssue not found");
+                General.NotFound(nameof(subIssue));
         }
         
         subIssue.UpdatePriority(priority);
