@@ -55,7 +55,7 @@ public class SetAssigneeHandler
             if (!issueExist)
             {
                 return Errors.General.
-                    NotFound("Issue not found").ToErrorList();
+                    NotFound(nameof(Issue)).ToErrorList();
             }
         
             var issueResult = await _issueRepository.

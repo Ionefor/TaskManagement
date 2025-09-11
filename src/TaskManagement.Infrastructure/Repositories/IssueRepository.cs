@@ -22,7 +22,8 @@ public class IssueRepository : IIssueRepository
     public async Task<Guid> Add(
         Issue issue, CancellationToken cancellationToken = default)
     {
-        await _dbContext.Issues.AddAsync(issue, cancellationToken);
+        await _dbContext.Issues.
+            AddAsync(issue, cancellationToken);
         
         return issue.Id;
     }
@@ -39,11 +40,13 @@ public class IssueRepository : IIssueRepository
     {
         var issue = await _dbContext.Issues.
             Include(i => i.SubIssues)
-            .FirstOrDefaultAsync(i => i.Id == issueId, cancellationToken);
+            .FirstOrDefaultAsync(i => i.Id == issueId,
+                cancellationToken);
 
         if (issue is null)
         {
-            return Errors.General.NotFound("Issue not found");
+            return Errors.General.
+                NotFound(nameof(Issue));
         }
 
         return issue;
@@ -61,7 +64,8 @@ public class IssueRepository : IIssueRepository
         
         if (issue is null)
         {
-            return Errors.General.NotFound("Issue not found");
+            return Errors.General.
+                NotFound(nameof(Issue));
         }
         
         var subIssue = issue.SubIssues.
@@ -69,7 +73,8 @@ public class IssueRepository : IIssueRepository
         
         if (subIssue is null)
         {
-            return Errors.General.NotFound("SubIssue not found");
+            return Errors.General.
+                NotFound(nameof(SubIssue));
         }
         
         return subIssue;

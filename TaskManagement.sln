@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		compose.yaml = compose.yaml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B68814A-FBEA-460E-A268-79C12F192FB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{A579EB86-C601-4584-88C7-8D544E51A184}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +32,7 @@ Global
 		{5FB09A42-25B3-4562-951B-8F1A3E9FCF00} = {94328AE1-0AC6-4736-825A-9EA59836F6BB}
 		{E7020E6D-6073-4562-B78E-18F9332B3D8F} = {94328AE1-0AC6-4736-825A-9EA59836F6BB}
 		{F476B8B5-ED7C-4A42-A03F-C4C0A8010EBE} = {94328AE1-0AC6-4736-825A-9EA59836F6BB}
+		{A579EB86-C601-4584-88C7-8D544E51A184} = {0B68814A-FBEA-460E-A268-79C12F192FB5}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{89F7D500-009C-4044-8A12-210E3870F242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -50,5 +55,9 @@ Global
 		{F476B8B5-ED7C-4A42-A03F-C4C0A8010EBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F476B8B5-ED7C-4A42-A03F-C4C0A8010EBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F476B8B5-ED7C-4A42-A03F-C4C0A8010EBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A579EB86-C601-4584-88C7-8D544E51A184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A579EB86-C601-4584-88C7-8D544E51A184}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A579EB86-C601-4584-88C7-8D544E51A184}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A579EB86-C601-4584-88C7-8D544E51A184}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

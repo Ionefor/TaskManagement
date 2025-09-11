@@ -17,10 +17,11 @@ public class Title : ComparableValueObject
     
     public static Result<Title, Error> Create(string value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length > 20)
+        if (string.IsNullOrEmpty(value) || 
+            value.Length > Constants.Validation.MediumTextLength)
         {
             return Errors.Errors.General.
-                ValueIsInvalid("Title is invalid");
+                ValueIsInvalid(nameof(Title));
         }
         
         return new Title(value);

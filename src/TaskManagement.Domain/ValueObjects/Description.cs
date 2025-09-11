@@ -16,10 +16,11 @@ public class Description : ComparableValueObject
     
     public static Result<Description, Error> Create(string value)
     {
-        if (string.IsNullOrEmpty(value) || value.Length > 5000)
+        if (string.IsNullOrEmpty(value) ||
+            value.Length > Constants.Validation.MaxTextLength)
         {
             return Errors.Errors.General.
-                ValueIsInvalid("Description is invalid");
+                ValueIsInvalid(nameof(Description));
         }
         
         return new Description(value);

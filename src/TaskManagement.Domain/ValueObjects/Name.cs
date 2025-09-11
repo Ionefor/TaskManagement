@@ -15,10 +15,11 @@ public class Name : ComparableValueObject
     
     public static Result<Name, Error> Create(string value)
     {
-        if (string.IsNullOrWhiteSpace(value) || value.Length > 20)
+        if (string.IsNullOrWhiteSpace(value) || 
+            value.Length > Constants.Validation.LowTextLength)
         {
             return Errors.Errors.General.
-                ValueIsInvalid("Name is invalid");
+                ValueIsInvalid(nameof(Name));
         }
         
         return new Name(value);

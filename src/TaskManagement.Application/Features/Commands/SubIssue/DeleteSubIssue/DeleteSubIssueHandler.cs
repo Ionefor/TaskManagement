@@ -44,7 +44,7 @@ public class DeleteSubIssueHandler :
             if (!issueExist)
             {
                 return Errors.General.
-                    NotFound("Issue not found").ToErrorList();
+                    NotFound(nameof(Issue)).ToErrorList();
             }
         
             var subIssueExist = await _readDbContext.SubIssues.
@@ -54,7 +54,7 @@ public class DeleteSubIssueHandler :
             if (!subIssueExist)
             {
                 return Errors.General.
-                    NotFound("SubIssue not found").ToErrorList();
+                    NotFound(nameof(SubIssue)).ToErrorList();
             }
         
             var issueResult = await _issueRepository.

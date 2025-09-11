@@ -32,7 +32,7 @@ public static class ValidatorsExtension
             if (!Enum.TryParse(typeof(TEnum), value!.ToString(), out var result))
             {
                 context.AddFailure(Errors.General.
-                    ValueIsInvalid("value is invalid").Serialize());
+                    ValueIsInvalid(nameof(value)).Serialize());
             }
         });
     }
@@ -45,7 +45,7 @@ public static class ValidatorsExtension
             let errorMessage = validationError.ErrorMessage
             let error = Error.Deserialize(errorMessage)
             select Errors.General.ValueIsInvalid(
-                validationError.PropertyName + " is invalid");
+                validationError.PropertyName);
 
         return errors.ToList();
     }

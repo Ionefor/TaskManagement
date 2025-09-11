@@ -24,7 +24,8 @@ public record Error
 
     public string? InvalidField { get; }
 
-    internal static Error Validation(string code, string message, string? invalidField = null)
+    internal static Error Validation(
+        string code, string message, string? invalidField = null)
     {
         return new Error(code, message, ErrorType.Validation, invalidField);
     }

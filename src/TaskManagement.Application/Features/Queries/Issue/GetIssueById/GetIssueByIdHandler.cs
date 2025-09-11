@@ -28,7 +28,7 @@ public class GetIssueByIdHandler :
         if (issue is null)
         {
             return Errors.General.
-                NotFound("Issue not found");
+                NotFound(nameof(Issue));
         }
         
         return issue;
